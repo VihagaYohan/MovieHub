@@ -1,0 +1,38 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native'
+
+// screens
+import {HomeScreen} from './app/screens'
+
+
+function App(): JSX.Element {
+ 
+  return (
+    <NavigationContainer>
+        <HomeScreen/>
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+ 
+});
+
+export default App;
