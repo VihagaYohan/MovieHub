@@ -8,6 +8,7 @@ import {DIMENSIONS,COLORS} from '../constants'
 
 interface propTypes {
     parentContainer?:ViewStyle | ViewStyle[],
+    innerContainer?:ViewStyle | ViewStyle[],
     children:JSX.Element | JSX.Element[],
     statusBarStyle?: string
 }
@@ -15,7 +16,9 @@ interface propTypes {
 const UIContainer = (props:propTypes) =>{
     return(
         <SafeAreaView style={[styles.container,props.parentContainer]}>
-            <View>{props.children}</View>
+            <View 
+            style={[styles.childContainer,props.innerContainer]}>
+                {props.children}</View>
         </SafeAreaView>
     )
 }
@@ -24,7 +27,10 @@ const styles = StyleSheet.create({
     container:{
         width:DIMENSIONS.screenWidth,
         height:DIMENSIONS.screenHeight,
-        backgroundColor:COLORS.white
+        backgroundColor:COLORS.grey.grey100,
+    },
+    childContainer:{
+        padding:DIMENSIONS.PADDING
     }
 })
 
