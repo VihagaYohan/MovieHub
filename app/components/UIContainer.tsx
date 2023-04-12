@@ -4,7 +4,7 @@ import {StyleSheet,SafeAreaView,View,ViewStyle} from 'react-native'
 // components
 
 // constants
-import {DIMENSIONS} from '../constants'
+import {DIMENSIONS,COLORS} from '../constants'
 
 interface propTypes {
     parentContainer?:ViewStyle | ViewStyle[],
@@ -23,7 +23,8 @@ const UIContainer = (props:propTypes) =>{
 const styles = StyleSheet.create({
     container:{
         width:DIMENSIONS.screenWidth,
-        height:DIMENSIONS.screenHeight
+        height:DIMENSIONS.screenHeight,
+        backgroundColor:COLORS.white
     }
 })
 

@@ -18,6 +18,9 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native'
 
+// navigators
+import {AppNavigator} from './app/navigators'
+
 // screens
 import {HomeScreen} from './app/screens'
 
@@ -26,7 +29,7 @@ function App(): JSX.Element {
  
   return (
     <NavigationContainer>
-        <HomeScreen/>
+        <AppNavigator/>
     </NavigationContainer>
   );
 }
