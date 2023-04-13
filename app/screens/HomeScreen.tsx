@@ -16,6 +16,9 @@ import {UIContainer, UIRating} from '../components';
 // constants
 import {COLORS, CONSTANTS, STYLES} from '../constants';
 
+// services
+import {getTopMovies} from '../services/movies/MoviesService'
+
 const HomeScreen = ({
   navigation,
 }: {
@@ -28,11 +31,21 @@ const HomeScreen = ({
     });
   });
 
+  // fetch data
+  const _fetchMovies = async()=>{
+    try{
+        let result = await getTopMovies()
+
+    }catch(e){
+        console.log(e)
+    }
+  }
+
+  _fetchMovies()
+
   return (
     <UIContainer>
       <View style={[styles.itemContainer, STYLES.shadow]}></View>
-
-      <UIRating />
 
       
     </UIContainer>
