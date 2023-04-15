@@ -50,6 +50,11 @@ import UIImageWithRating from '../widgets/UIImageWithRating';
 
 // hooks
 import UseConnectivity from '../hooks/useConnectivity';
+import useTheme from '../hooks/useTheme'
+
+// redux
+import {useSelector,useDispatch} from 'react-redux'
+import { changeTheme } from '../store/Reducers/theme';
 
 const HomeScreen = ({
   navigation,
@@ -73,6 +78,11 @@ const HomeScreen = ({
   const [page, setPage] = useState<number>(1);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
+  const [theme, setTheme] = useTheme('light-mode')
+  const [isEnabled, setIsEnabled] = useState(theme==='light-mode'?false:true);
+
+  // dispatch
+  const dispatch = useDispatch();
 
   const isConnected = UseConnectivity();
 
@@ -118,6 +128,20 @@ const HomeScreen = ({
       _fetchMovies();
     }, 1500);
   };
+
+  // change redux state 
+  /* NOTE THIS IS NOT FULLY IMPLEMENTED. I ADDED THIS TO SHOW THE USABILITY OF REDUX THROUGH OUT THE PROJECT
+     IDEA IS TO CHANGE THE THEME AND STORE IN ASYNC STORAGE & REDUX STORE
+  */
+   // some toggle switch
+   const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState)
+    if(isEnabled == false) {
+        dispatch(changeTheme('dark-mode'))
+    }else{
+        dispatch(changeTheme('light-mode'))
+    }
+}
 
   // render UI
   const RenderContent = () => {
@@ -250,7 +274,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.red.red900,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: CONSTANTS.RADIUS,
+    borderRadius: 10
   },
   retryButtonText: {
     color: COLORS.white,

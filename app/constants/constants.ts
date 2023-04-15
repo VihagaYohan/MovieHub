@@ -9,7 +9,7 @@ const DEFAULT_WIDTH = DIMENSIONS.screenWidth - (PADDING*2)
 const RADIUS = 10
 
 export default {
-    PADDING,
-    DEFAULT_WIDTH,
-    RADIUS
+    PADDING:PADDING,
+    DEFAULT_WIDTH:DEFAULT_WIDTH,
+    RADIUS:RADIUS
 }

@@ -8,6 +8,7 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import {Provider} from 'react-redux';
 
 // navigators
 import {AppNavigator} from './app/navigators';
@@ -22,9 +23,11 @@ function App(): JSX.Element {
   console.ignoredYellowBox;
 
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }
 
