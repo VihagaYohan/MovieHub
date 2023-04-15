@@ -42,8 +42,14 @@ import {getTopMovies} from '../services/movies/MoviesService';
 // models
 import {Movie, ErrorResponse} from '../models';
 
+// enums
+import {ErrorMessage} from '../enums/Enum';
+
 // widgets
 import UIImageWithRating from '../widgets/UIImageWithRating';
+
+// hooks
+import UseConnectivity from '../hooks/useConnectivity';
 
 const HomeScreen = ({
   navigation,
@@ -62,14 +68,21 @@ const HomeScreen = ({
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>(
-    'Unable to retrive the movies. Please try again',
+    ErrorMessage.items[0].title,
   );
   const [page, setPage] = useState<number>(1);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const isConnected = UseConnectivity();
 
   useEffect(() => {
-    _fetchMovies();
+    if (!isConnected) {
+      setVisible(true);
+      setErrorMessage(ErrorMessage.items[0].title);
+    } else {
+      _fetchMovies();
+    }
   }, []);
 
   // fetch movies
@@ -174,26 +187,18 @@ const HomeScreen = ({
       <View style={{flex: 1}}>
         {loading && <UILoader />}
 
-        {!loading && <RenderContent />}
+        {!loading && visible == false ? <RenderContent /> : null}
       </View>
 
       <Modal visible={visible} animationType="slide">
-        <View
-          style={styles.modalContainer}>
-          <View
-            style={styles.errorMessasgeContainer}>
-            <UITextView
-              text={errorMessage}
-              textStyle={styles.errorMessage}
-            />
+        <View style={styles.modalContainer}>
+          <View style={styles.errorMessasgeContainer}>
+            <UITextView text={errorMessage} textStyle={styles.errorMessage} />
 
             <TouchableOpacity
               style={styles.retryButtonContainer}
               onPress={() => _retry()}>
-              <UITextView
-                text="Retry"
-                textStyle={styles.retryButtonText}
-              />
+              <UITextView text="Retry" textStyle={styles.retryButtonText} />
             </TouchableOpacity>
           </View>
         </View>
@@ -222,35 +227,35 @@ const styles = StyleSheet.create({
   overview: {
     color: COLORS.grey.grey500,
   },
-  modalContainer:{
+  modalContainer: {
     backgroundColor: '#272727',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  errorMessasgeContainer:{
+  errorMessasgeContainer: {
     backgroundColor: COLORS.white,
     paddingHorizontal: DIMENSIONS.PADDING,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: DIMENSIONS.PADDING,
   },
-  errorMessage:{
+  errorMessage: {
     color: COLORS.grey.grey600,
     fontSize: 20,
     textAlign: 'center',
   },
-  retryButtonContainer:{
+  retryButtonContainer: {
     marginVertical: 10,
     backgroundColor: COLORS.red.red900,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: CONSTANTS.RADIUS,
   },
-  retryButtonText:{
+  retryButtonText: {
     color: COLORS.white,
     fontSize: 20,
-  }
+  },
 });
 
 export default HomeScreen;

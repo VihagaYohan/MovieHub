@@ -24,7 +24,6 @@ const UITagline = (props:IUITaglineProps) =>{
     // get movie rating certificate
     const _getGenere = ()=>{
       if(props.adult!= undefined){
-           console.log(props.adult)
         if(props.adult){
             setGenre('All')
         }else{

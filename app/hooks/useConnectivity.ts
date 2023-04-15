@@ -1,25 +1,20 @@
-import React, {Component, useState, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+import { useEffect, useState } from 'react';
+import NetInfo from "@react-native-community/netinfo";
 
 const UseConnectivity = () => {
-  const [connection, setConnection] = useState<boolean>(false);
-
-  // check connectivity
-  const _checkConnectivity = () => {
-    // Subscribe
-  const unsubscribe = NetInfo.addEventListener(state => {
-    console.log('Is connected?', state.isConnected);
-  });
-
-  // Unsubscribe
-  unsubscribe();
-  };
+  const [isConnected, setIsConnected] = useState<boolean>(true);
 
   useEffect(() => {
-    _checkConnectivity();
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  return {connection};
+  return isConnected;
 };
+
 export default UseConnectivity;
