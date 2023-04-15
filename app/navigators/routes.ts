@@ -1,3 +1,3 @@
 export default {
-    HomeScreen:'home_screen'
+    Home:'home_screen'
 }
