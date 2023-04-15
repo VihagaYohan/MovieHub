@@ -23,4 +23,4 @@ If you encounter any issues running the project, try the following steps:
 - Check that you have the correct version of Node.js installed by running node -v.
 
 ## NOTE
--.env file is not added in repo. However I have already sent the .env file along with assignment submission email
+-Sample for .env file is added in repo. Please replace the token in actual .env file
