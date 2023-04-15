@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   },
   childContainer: {
     flex: 1,
-    padding: CONSTANTS.PADDING,
   },
 });
 

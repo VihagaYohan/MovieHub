@@ -7,35 +7,25 @@
 
 import React from 'react';
 import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native'
+import {NavigationContainer} from '@react-navigation/native';
 
 // navigators
-import {AppNavigator} from './app/navigators'
+import {AppNavigator} from './app/navigators';
 
 // screens
-import {HomeScreen} from './app/screens'
+import {HomeScreen} from './app/screens';
 
+// store
+import {store} from './app/store/store';
 
 function App(): JSX.Element {
- 
+  console.ignoredYellowBox;
+
   return (
     <NavigationContainer>
-        <AppNavigator/>
+      <AppNavigator />
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
- 
-});
 
 export default App;
