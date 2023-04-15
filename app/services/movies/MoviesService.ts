@@ -2,7 +2,7 @@
 import {UTILS} from '../../constants';
 
 // models
-import {Response,MovieResponse,ErrorResponse} from '../../models';
+import {Response, MovieResponse, ErrorResponse} from '../../models';
 
 // API
 import App from '../../api/api';
@@ -16,23 +16,18 @@ export const getTopMovies = async (page: number = 1) => {
     let url: string = `${Endpoints.movieList}?page=${page}`;
 
     let response = await App.get<any>(url);
-    if(response.status == 200){
+    if (response.status == 200) {
+      const {page, results, total_pages, total_results} = response.data;
+
       return new Response(
         true,
         200,
-        new MovieResponse(
-          response.data.page,
-          response.data.results,
-          response.data.total_pages,
-          response.data.total_results
-        )
-      )
-    }else{
-     console.log(response)
+        new MovieResponse(page, results, total_pages, total_results),
+      );
+    } else {
+      console.log(response);
     }
   } catch (e: any) {
     UTILS.showConsole(e);
   }
 };
-
-
