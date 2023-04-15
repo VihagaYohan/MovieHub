@@ -6,7 +6,15 @@ import React, {
   useMemo,
   useLayoutEffect,
 } from 'react';
-import {StyleSheet, View, Text, ViewStyle, FlatList, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ViewStyle,
+  FlatList,
+  Image,
+  RefreshControl,
+} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {IMAGE_URL} from '@env';
 
@@ -22,7 +30,7 @@ import {
 } from '../components';
 
 // constants
-import {COLORS, CONSTANTS, STYLES, UTILS} from '../constants';
+import {COLORS, CONSTANTS, DIMENSIONS, STYLES, UTILS} from '../constants';
 
 // services
 import {getTopMovies} from '../services/movies/MoviesService';
@@ -32,6 +40,7 @@ import {Movie, ErrorResponse} from '../models';
 
 // widgets
 import UIImageWithRating from '../widgets/UIImageWithRating';
+import {useFetch} from '../hooks';
 
 const HomeScreen = ({
   navigation,
@@ -51,6 +60,7 @@ const HomeScreen = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>();
   const [page, setPage] = useState<number>(1);
+  const [refreshing, setRefreshing] = useState<boolean>(true);
 
   useEffect(() => {
     _fetchMovies();
@@ -64,6 +74,7 @@ const HomeScreen = ({
         const {results} = response.result;
 
         setMovies([...movies, ...results]);
+        //setMovies(results)
       } else {
         setError(true);
       }
@@ -74,13 +85,29 @@ const HomeScreen = ({
     }
   };
 
+  const _onRefresh = () => {
+    setRefreshing(true);
+    setPage(page + 1);
+    setTimeout(() => {
+      _fetchMovies();
+    }, 1500);
+  };
+
   // render UI
   const RenderContent = () => {
     return (
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={_onRefresh} />
+        }
         data={movies}
         keyExtractor={(item, index) => `movies-${index}`}
         renderItem={({item, index}) => <RenderItem item={item} index={index} />}
+        contentContainerStyle={{
+          paddingHorizontal: DIMENSIONS.PADDING,
+          paddingVertical: DIMENSIONS.PADDING,
+          minHeight: '100%',
+        }}
       />
     );
   };
@@ -90,7 +117,9 @@ const HomeScreen = ({
       <UICard containerStyle={styles.itemContainer}>
         <UIImageWithRating
           path={`${IMAGE_URL}${item.backdrop_path}`}
-          popularity={item.popularity >= 100 ? 100 :  Math.round(item.popularity)}
+          popularity={
+            item.popularity >= 100 ? 100 : Math.round(item.popularity)
+          }
         />
 
         <View style={styles.itemContentContainer}>
@@ -122,6 +151,10 @@ const HomeScreen = ({
     );
   };
 
+  const RenderFooter = () => {
+    return <UILoader size="small" parentStyle={{marginBottom: 10}} />;
+  };
+
   return (
     <UIContainer>
       <View style={{flex: 1}}>
@@ -137,9 +170,9 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: UTILS.RNSize(20),
-    paddingBottom: UTILS.RNSize(27),
-    paddingHorizontal: UTILS.RNSize(10),
+    marginBottom: 20,
+    paddingBottom: 27,
+    paddingHorizontal: 10,
   },
   itemContentContainer: {flex: 1, marginLeft: 10, paddingVertical: 15},
   itemTitle: {
