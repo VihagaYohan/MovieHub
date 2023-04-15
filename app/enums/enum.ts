@@ -1,3 +1,4 @@
+// movie genere categories
 export class GenereType {
     constructor(public readonly value: number, public readonly title: string) {}
 
@@ -83,4 +84,25 @@ export class GenereType {
 
     public static titles = this.items.map((s) => s.title);
     public static values = this.items.map((s) => s.value);
+}
+
+// movie rating -> All / Rated-R
+export class Rating{
+    constructor(public readonly value:number,public readonly title:string){}
+
+    public static All():Rating{
+        return new Rating(0,"All")
+    }
+
+    public static R():Rating{
+        return new Rating(1,"R")
+    }
+
+    public static items = [
+        Rating.All,
+        Rating.R
+    ]
+
+    public static titles = this.items.map((s) => s.title)
+    public static values = this.items.map(s => s.value)
 }
