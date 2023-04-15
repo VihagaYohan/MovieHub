@@ -21,3 +21,6 @@ If you encounter any issues running the project, try the following steps:
 - Clear the cache by running npm cache clean or yarn cache clean.
 - Delete the node_modules folder and run npm install or yarn install again.
 - Check that you have the correct version of Node.js installed by running node -v.
+
+## NOTE
+-.env file is not added in repo. However I have already sent the .env file along with assignment submission email
