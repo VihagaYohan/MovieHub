@@ -13,18 +13,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UIHeader(
-    title: String,
+    title: Int,
     isShowTitle: Boolean = false,
     showNavigationIcon: Boolean = false,
     navigationIcon: ImageVector? = null,
     showActions: Boolean = false,
     actions: ImageVector? = null,
 ) {
+    val context = LocalContext.current
+    val appBarTitle = context.getString(title)
     CenterAlignedTopAppBar(
         navigationIcon = {
             if(navigationIcon != null && showNavigationIcon) {
@@ -45,7 +48,7 @@ fun UIHeader(
         },
         title = {
             Text(
-                text = if (isShowTitle) title else "",
+                text = if (isShowTitle) appBarTitle else "",
                 style = MaterialTheme.typography.titleLarge
             )
         })
@@ -55,7 +58,7 @@ fun UIHeader(
 @Composable
 fun UIHeaderPreview() {
     UIHeader(
-        title = "Movie Hub",
+        title = 1,
         isShowTitle =  true,
         showNavigationIcon = true,
         showActions = true,

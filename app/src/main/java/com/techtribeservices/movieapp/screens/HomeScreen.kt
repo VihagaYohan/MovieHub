@@ -11,23 +11,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.techtribeservices.movieapp.R
 import com.techtribeservices.movieapp.widgets.UIHeader
 
 @Composable
 fun HomeScreen () {
-    Scaffold {innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-        ) {
+    Scaffold(
+        topBar = {
             UIHeader(
-                title = "Movie Hub",
+                title = R.string.app_name,
                 isShowTitle = true,
                 showNavigationIcon = true,
                 navigationIcon = Icons.Outlined.Menu,
                 showActions = true,
                 actions = Icons.Outlined.Notifications
             )
+        }
+    ) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+        ) {
+
         }
     }
 }
